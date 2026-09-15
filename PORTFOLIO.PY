@@ -5,7 +5,7 @@ projects = [
         "solution":"Automated pipeline that trains a classifier on 28 days of data, predicts daily goal achievement, and generates a coaching message.",
         "tools":   ["Python", "scikit-learn", "pandas", "FastAPI"],
         "result":  "Prediction + coaching in under 2 seconds. Exports weekly JSON report.",
-        "github":  "github.com/brianotieno/smp-tracker",
+        "github":  "github.com/anindozedeck/smp-tracker",
         "type":    "ML + API"
     },
     {
@@ -14,7 +14,7 @@ projects = [
         "solution":"Dashboard that fetches from three endpoints, processes each independently, and outputs a combined summary with protocol comparison.",
         "tools":   ["Python", "requests", "pandas"],
         "result":  "Single command produces a full multi-source report. Reduced prep time by 90%.",
-        "github":  "github.com/brianotieno/api-dashboard",
+        "github":  "github.com/anindozedeck/api-dashboard",
         "type":    "Data Pipeline"
     },
     {
@@ -23,7 +23,7 @@ projects = [
         "solution":"Client-side JavaScript tool. Prediction engine and coaching generator run entirely in the browser. No server required.",
         "tools":   ["JavaScript", "DOM API", "Fetch API"],
         "result":  "Zero setup for end users. Works on any device with a browser.",
-        "github":  "github.com/brianotieno/browser-coach",
+        "github":  "github.com/anindozedeck/browser-coach",
         "type":    "Web Tool"
     },
     {
@@ -32,7 +32,7 @@ projects = [
         "solution":"Python tool that organizes project data and generates a consistent portfolio summary.",
         "tools":   ["Python", "AI", "Data Structures"],
         "result":  "Produces a clear, reusable portfolio summary from one structured project list.",
-        "github":  "github.com/brianotieno/ai-portfolio-builder",
+        "github":  "github.com/anindozedeck/ai-portfolio-builder",
         "type":    "Automation"
     },
 ]
