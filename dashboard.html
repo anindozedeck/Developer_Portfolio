@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melkzadeck | Studio Dashboard</title>
+  <style>
+    :root {
+      --ink: #18231f;
+      --muted: #68736e;
+      --paper: #f3f5ef;
+      --surface: #ffffff;
+      --line: #dfe6dd;
+      --green: #1e6b54;
+      --green-soft: #dceee5;
+      --orange: #c26b3c;
+      --orange-soft: #f7e3d5;
+      --yellow-soft: #f7efc9;
+      --shadow: 0 18px 50px rgba(39, 65, 51, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(circle at 100% 0, #dceee2 0, transparent 27rem), var(--paper);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+    }
+
+    .shell { max-width: 1440px; margin: 0 auto; padding: 28px 32px 56px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 46px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.02em; }
+    .mark { display: grid; place-items: center; width: 38px; height: 38px; color: #fff; background: var(--green); border-radius: 11px; font-family: Georgia, serif; font-size: 22px; }
+    .date { color: var(--muted); font-size: 13px; }
+
+    .hero { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 30px; }
+    .eyebrow { margin: 0 0 10px; color: var(--orange); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, p { margin-top: 0; }
+    h1 { max-width: 760px; margin-bottom: 14px; font: 700 clamp(40px, 6vw, 76px)/.96 Georgia, serif; letter-spacing: -.055em; }
+    .intro { max-width: 590px; margin-bottom: 0; color: var(--muted); font-size: 16px; line-height: 1.6; }
+    .hero-note { min-width: 190px; padding: 17px 18px; border-left: 3px solid var(--orange); background: rgba(255,255,255,.55); }
+    .hero-note strong { display: block; margin-bottom: 5px; font: 700 25px Georgia, serif; }
+    .hero-note span { color: var(--muted); font-size: 12px; }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat, .panel { background: var(--surface); border: 1px solid rgba(205, 216, 207, .82); box-shadow: var(--shadow); }
+    .stat { min-height: 126px; padding: 21px; border-radius: 4px; }
+    .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .stat-value { margin: 12px 0 5px; font: 700 35px Georgia, serif; letter-spacing: -.04em; }
+    .stat-detail { color: var(--green); font-size: 12px; }
+
+    .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(310px, .65fr); gap: 24px; }
+    .panel { padding: 25px; border-radius: 4px; }
+    .panel + .panel { margin-top: 24px; }
+    .panel-heading { display: flex; align-items: start; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+    h2 { margin-bottom: 5px; font: 700 25px Georgia, serif; letter-spacing: -.035em; }
+    .panel-heading p { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+    .label { color: var(--orange); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .link { color: var(--green); font-size: 12px; font-weight: 700; text-decoration: none; }
+
+    .project-list { display: grid; gap: 10px; }
+    .project { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 15px 0; border-top: 1px solid var(--line); }
+    .project:first-child { border-top: 0; padding-top: 0; }
+    .project h3 { margin: 0 0 6px; font-size: 15px; }
+    .project p { max-width: 650px; margin-bottom: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .tag { align-self: start; padding: 6px 9px; color: var(--green); background: var(--green-soft); border-radius: 2px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+
+    .funnel { display: grid; gap: 14px; }
+    .funnel-row { display: grid; grid-template-columns: 90px 1fr 32px; align-items: center; gap: 10px; font-size: 12px; }
+    .bar { height: 9px; overflow: hidden; background: #edf0eb; border-radius: 20px; }
+    .bar i { display: block; height: 100%; background: var(--green); border-radius: inherit; }
+    .funnel-row strong { text-align: right; font-size: 12px; }
+    .insight { margin-top: 22px; padding: 14px; color: #5d4d15; background: var(--yellow-soft); font-size: 12px; line-height: 1.5; }
+
+    .quote-list { display: grid; gap: 13px; }
+    .quote { padding-bottom: 13px; border-bottom: 1px solid var(--line); }
+    .quote:last-child { padding-bottom: 0; border-bottom: 0; }
+    .quote-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .quote-name { font-size: 13px; font-weight: 800; }
+    .quote-price { color: var(--green); font: 700 16px Georgia, serif; }
+    .quote-meta { color: var(--muted); font-size: 11px; }
+
+    .timeline { display: grid; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 48px 1fr; gap: 13px; padding: 13px 0; border-top: 1px solid var(--line); }
+    .timeline-item:first-child { border-top: 0; padding-top: 0; }
+    .week { color: var(--orange); font-size: 12px; font-weight: 800; }
+    .timeline-item strong { display: block; margin-bottom: 3px; font-size: 13px; }
+    .timeline-item span { color: var(--muted); font-size: 11px; }
+
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .shell { padding: 20px 16px 40px; }
+      .topbar { margin-bottom: 34px; }
+      .date { display: none; }
+      .hero { display: block; }
+      .hero-note { margin-top: 22px; }
+      .stats { gap: 9px; }
+      .stat { min-height: 112px; padding: 15px; }
+      .stat-value { font-size: 28px; }
+      .panel { padding: 19px; }
+      .project { grid-template-columns: 1fr; gap: 10px; }
+      .tag { justify-self: start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="topbar" aria-label="Dashboard header">
+      <div class="brand"><span class="mark">M</span><span>melkzadeck / studio</span></div>
+      <div class="date">WEEK 10 · 24 SEPTEMBER 2026</div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Operator overview</p>
+        <h1>Build useful systems. Keep the work moving.</h1>
+        <p class="intro">A compact view of the portfolio, pipeline, and learning momentum behind an independent automation studio.</p>
+      </div>
+      <div class="hero-note"><strong>On track</strong><span>Portfolio and client acquisition are active.</span></div>
+    </header>
+
+    <section class="stats" aria-label="Key metrics">
+      <article class="stat"><span class="stat-label">Projects shipped</span><div class="stat-value">4</div><span class="stat-detail">Across 4 solution types</span></article>
+      <article class="stat"><span class="stat-label">Reply rate</span><div class="stat-value">62%</div><span class="stat-detail">8 meaningful responses</span></article>
+      <article class="stat"><span class="stat-label">Calls booked</span><div class="stat-value">2</div><span class="stat-detail">Next: 22 July</span></article>
+      <article class="stat"><span class="stat-label">Skills built</span><div class="stat-value">52+</div><span class="stat-detail">10 weeks completed</span></article>
+    </section>
+
+    <section class="dashboard-grid">
+      <div>
+        <article class="panel">
+          <div class="panel-heading"><div><span class="label">Proof of work</span><h2>Recent projects</h2><p>Selected systems built for real workflow problems.</p></div><a class="link" href="PORTFOLIO.PY">View source</a></div>
+          <div class="project-list">
+            <div class="project"><div><h3>SMP Performance Coach</h3><p>Predicts daily goal achievement and generates coaching notes from 28 days of data.</p></div><span class="tag">ML + API</span></div>
+            <div class="project"><div><h3>Multi-Endpoint API Dashboard</h3><p>Combines three data sources into one report and cuts preparation time by 90%.</p></div><span class="tag">Data Pipeline</span></div>
+            <div class="project"><div><h3>Browser-Based AI Coach</h3><p>A zero-setup coaching tool that runs entirely in the browser.</p></div><span class="tag">Web Tool</span></div>
+            <div class="project"><div><h3>AI Portfolio Builder</h3><p>Turns structured project details into a clear, reusable portfolio summary.</p></div><span class="tag">Automation</span></div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><span class="label">Learning loop</span><h2>Course progress</h2><p>The current foundation behind the studio offer.</p></div><a class="link" href="AI_MASTERCLASS_SUMMARY.PY">Open plan</a></div>
+          <div class="timeline">
+            <div class="timeline-item"><span class="week">W08</span><div><strong>JavaScript and Web</strong><span>DOM manipulation · Fetch API · Full-stack</span></div></div>
+            <div class="timeline-item"><span class="week">W09</span><div><strong>Git and GitHub</strong><span>Commits · Branches · Pull requests</span></div></div>
+            <div class="timeline-item"><span class="week">W10</span><div><strong>Portfolio and Freelance</strong><span>Service offer · Pricing · Outreach</span></div></div>
+          </div>
+        </article>
+      </div>
+
+      <aside>
+        <article class="panel">
+          <div class="panel-heading"><div><span class="label">Client pipeline</span><h2>Outreach health</h2><p>13 conversations in the current log.</p></div><a class="link" href="OUTREACH.PY">View log</a></div>
+          <div class="funnel">
+            <div class="funnel-row"><span>Contacted</span><div class="bar"><i style="width: 100%"></i></div><strong>13</strong></div>
+            <div class="funnel-row"><span>Replied</span><div class="bar"><i style="width: 62%"></i></div><strong>8</strong></div>
+            <div class="funnel-row"><span>Calls</span><div class="bar"><i style="width: 25%"></i></div><strong>2</strong></div>
+            <div class="funnel-row"><span>Proposals</span><div class="bar"><i style="width: 25%"></i></div><strong>2</strong></div>
+          </div>
+          <div class="insight"><strong>Signal:</strong> LinkedIn and referrals are producing the warmest conversations. Keep the current message while testing a sharper proof point.</div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><span class="label">Revenue view</span><h2>Quote queue</h2><p>Active estimates from the pricing model.</p></div><a class="link" href="PROJECT_RATE_CALCULATOR.PY">Open calculator</a></div>
+          <div class="quote-list">
+            <div class="quote"><div class="quote-top"><span class="quote-name">SMP tracker tool</span><span class="quote-price">$4,050</span></div><span class="quote-meta">50 hours · complex build</span></div>
+            <div class="quote"><div class="quote-top"><span class="quote-name">FastAPI + Supabase</span><span class="quote-price">$1,250</span></div><span class="quote-meta">20 hours · integration</span></div>
+            <div class="quote"><div class="quote-top"><span class="quote-name">Weekly CSV report</span><span class="quote-price">$500</span></div><span class="quote-meta">8 hours · standard build</span></div>
+          </div>
+        </article>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
